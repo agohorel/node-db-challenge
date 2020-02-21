@@ -18,7 +18,7 @@ function findById(table, id) {
 // JOIN tasks as t
 // ON p.id = t.project_id;
 
-function getTasks(id) {
+function getFormattedTasks(id) {
   return db("projects as p")
     .select(
       "p.name as Project Name",
@@ -30,11 +30,26 @@ function getTasks(id) {
     .where({ "p.id": id });
 }
 
+function getTasks(id) {
+  return db("projects as p")
+    .select("t.id", "t.description", "t.notes", "t.completed")
+    .join("tasks as t", { "p.id": "t.project_id" })
+    .where({ "p.id": id });
+}
+
 function getProjectResources(id) {
   return db("projects as p")
+    .select("r.id", "r.name", "r.description")
     .join("project_resources as pr", { "p.id": "pr.project_id" })
     .join("resources as r", { "r.id": "pr.resource_id" })
     .where({ "p.id": id });
 }
 
-module.exports = { find, findById, insert, getTasks, getProjectResources };
+module.exports = {
+  find,
+  findById,
+  insert,
+  getFormattedTasks,
+  getTasks,
+  getProjectResources
+};

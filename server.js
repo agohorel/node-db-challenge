@@ -45,7 +45,7 @@ server.post("/projects", async (req, res) => {
 
 server.get("/tasks/:id", async (req, res) => {
   try {
-    const tasks = await db.getTasks(req.params.id);
+    const tasks = await db.getFormattedTasks(req.params.id);
     res.status(200).json(tasks);
   } catch (error) {
     res.status(500).json({ error: "server error" });
