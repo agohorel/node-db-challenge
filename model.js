@@ -24,7 +24,8 @@ function getFormattedTasks(id) {
       "p.name as Project Name",
       "p.description as Project Description",
       "t.description as Task Desciption",
-      "t.notes as Task Notes"
+      "t.notes as Task Notes",
+      "t.completed as Completed"
     )
     .join("tasks as t", { "p.id": "t.project_id" })
     .where({ "p.id": id });
