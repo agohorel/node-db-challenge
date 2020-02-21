@@ -62,4 +62,17 @@ server.post("/tasks/:id", async (req, res) => {
   }
 });
 
+server.get("/projects/:id/detail", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const project = await db.findById("projects", id);
+    const tasks = await db.getTasks(id);
+    const resources = await db.getProjectResources(id);
+
+    res.status(200).json({ ...project, tasks, resources });
+  } catch (error) {
+    res.status(500).json({ error: "server error" });
+  }
+});
+
 server.listen(port, () => console.log(`server listening on port ${port}`));

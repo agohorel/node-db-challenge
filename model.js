@@ -30,4 +30,11 @@ function getTasks(id) {
     .where({ "p.id": id });
 }
 
-module.exports = { find, findById, insert, getTasks };
+function getProjectResources(id) {
+  return db("projects as p")
+    .join("project_resources as pr", { "p.id": "pr.project_id" })
+    .join("resources as r", { "r.id": "pr.resource_id" })
+    .where({ "p.id": id });
+}
+
+module.exports = { find, findById, insert, getTasks, getProjectResources };
