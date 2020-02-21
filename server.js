@@ -24,4 +24,23 @@ server.post("/resources", async (req, res) => {
   }
 });
 
+server.get("/projects", async (req, res) => {
+  try {
+    const projects = await db.find("projects");
+    res.status(200).json(projects);
+  } catch (error) {
+    res.status(500).json({ error: "server error" });
+  }
+});
+
+server.post("/projects", async (req, res) => {
+  try {
+    const [newProjectID] = await db.insert("projects", req.body);
+    const newProject = await db.findById("projects", newProjectID);
+    res.status(201).json(newProject);
+  } catch (error) {
+    res.status(500).json({ error: "server error" });
+  }
+});
+
 server.listen(port, () => console.log(`server listening on port ${port}`));
