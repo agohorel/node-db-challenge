@@ -27,7 +27,7 @@ function getTasks(id) {
       "t.notes as Task Notes"
     )
     .join("tasks as t", { "p.id": "t.project_id" })
-    .where({ id });
+    .where({ "p.id": id });
 }
 
 module.exports = { find, findById, insert, getTasks };
